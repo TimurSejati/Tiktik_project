@@ -180,7 +180,7 @@ export const topicPostsQuery = (topic: string | string[]) => {
       userName,
       image
     },
-  likes,
+   likes,
 
     comments[]{
       comment,

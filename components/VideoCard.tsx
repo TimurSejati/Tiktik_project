@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Video } from "../types";
 import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
 import { BsPlay, BsFillPlayFill, BsFillPauseFill } from "react-icons/bs";
@@ -27,12 +27,18 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
     }
   };
 
+  useEffect(() => {
+    if (videoRef?.current) {
+      videoRef.current.muted = isVideoMuted;
+    }
+  }, [isVideoMuted]);
+
   return (
     <div className="flex flex-col pb-6 border-b-2 border-gray-200">
       <div>
         <div className="flex gap-3 p-2 font-semibold rounded cursor-pointers">
           <div className="w-10 h-10 md:w-16 md:h-16">
-            <Link href="/">
+            <Link href={`/profile/${post.postedBy._id}`}>
               <>
                 <Image
                   width={62}
@@ -45,10 +51,10 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
               </>
             </Link>
           </div>
-          <Link href="/">
-            <div className="flex items-center gap-2">
-              <p className="flex items-center gap-2 font-bold md:text-md text-primary">
-                {post.postedBy.userName}
+          <Link href={`/profile/${post.postedBy._id}`}>
+            <div className="flex flex-col gap-2">
+              <p className="flex items-center gap-2 font-bold lowercase md:text-md text-primary">
+                {post.postedBy.userName.replaceAll(" ", "")}
                 <GoVerified className="text-blue-400 text-md" />
               </p>
               <p className="hidden text-xs font-medium text-gray-500 capitalize md:block">
